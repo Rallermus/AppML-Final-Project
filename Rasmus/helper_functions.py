@@ -109,12 +109,13 @@ def import_flight_data(
 
     return pd.concat(frames, ignore_index=True)
 
-def extract_wind_data(flight_df, offset=10): 
+def extract_wind_data(flight_df, offset=10, data_dir): 
     """
     Extracts wind data from the TWI dataset for a given flight, based on the landing time and an offset for the recording start time.
     Args:
         flight_df (pd.DataFrame): A DataFrame containing data for one flight, including landing time information.
         offset (int): The number of minutes before the landing time to start recording wind data. Default is 10 minutes.
+        data_dir (str): The directory containing the wind data files.
     Returns:
         pd.DataFrame: A DataFrame containing the wind data for the specified time range.
     """
@@ -128,6 +129,11 @@ def extract_wind_data(flight_df, offset=10):
     else:
         day_string = str(day)
 
+    if month < 10:
+        month_string = '0'+str(month)
+    else:        
+        month_string = str(month)
+
     year = first['year'].astype(int)
     start_h = first['hour'].astype(int)
     start_m = first['minute'].astype(int)
@@ -140,10 +146,10 @@ def extract_wind_data(flight_df, offset=10):
     if start_of_recording_time.day != start_of_landing_time.day:
         raise ValueError("Start of recording time is on a different day than the landing time. Please adjust the offset or check the flight data.")
     
-    date_string = str(year)+'-'+str(month)+'-'+day_string
+    date_string = str(year)+'-'+month_string+'-'+day_string
     file_string = 'TWI-'+date_string+'_UTC_log.csv'
 
-    wind_df = pd.read_csv('/Users/rasmus/Desktop/Fysik/AppliedML2026/Final_project_data/data/ML_data/TWI data/'+file_string, sep=';')
+    wind_df = pd.read_csv(data_dir + '/' + file_string, sep=';')
 
     wind_df['DateTime'] = pd.to_datetime(wind_df['DateTime'], format='%Y-%m-%d %H:%M:%S')
 
