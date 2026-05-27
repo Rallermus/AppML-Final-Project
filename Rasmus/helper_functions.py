@@ -109,7 +109,7 @@ def import_flight_data(
 
     return pd.concat(frames, ignore_index=True)
 
-def extract_wind_data(flight_df, offset=10, data_dir): 
+def extract_wind_data(flight_df, data_dir, offset=10): 
     """
     Extracts wind data from the TWI dataset for a given flight, based on the landing time and an offset for the recording start time.
     Args:
