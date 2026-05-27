@@ -114,8 +114,8 @@ def extract_wind_data(flight_df, data_dir, offset=10):
     Extracts wind data from the TWI dataset for a given flight, based on the landing time and an offset for the recording start time.
     Args:
         flight_df (pd.DataFrame): A DataFrame containing data for one flight, including landing time information.
-        offset (int): The number of minutes before the landing time to start recording wind data. Default is 10 minutes.
         data_dir (str): The directory containing the wind data files.
+        offset (int): The number of minutes before the landing time to start recording wind data. Default is 10 minutes.
     Returns:
         pd.DataFrame: A DataFrame containing the wind data for the specified time range.
     """
