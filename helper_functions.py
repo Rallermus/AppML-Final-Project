@@ -92,6 +92,9 @@ def import_flight_data(
     for csv_path in csv_files:
         if 'GKN' in csv_path.name: #Skip files with OY-GKN, as their format sucks
             continue
+        if 'Dep_' in csv_path.name: #Skip departure files, as they are not relevant for the landing prediction task
+            continue
+
         frame = pd.read_csv(csv_path, low_memory=False)
 
         frame.columns = [COLUMN_MAP.get(c, c) for c in frame.columns]       
